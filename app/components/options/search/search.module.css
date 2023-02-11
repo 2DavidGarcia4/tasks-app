@@ -1,0 +1,81 @@
+.search{
+  top: 0;
+  width: 100%;
+  height: 60px;
+  position: fixed;
+  transition: padding 0.5s, box-shadow 0.5s;
+  background-color: var(--Element-color);
+}
+
+.open{
+  padding-top: 60px;
+  box-shadow: 0 4px 8px var(--Shadow-color);
+}
+
+.form{
+  z-index: 10;
+  width: 100%;
+  height: 40px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input{
+  background-color: var(--Element-color);
+  width: 100%;
+  height: 100%;
+  padding: 0 20px;
+  outline: none;
+  /* border: none; */
+  position: relative;
+  font-size: 16px;
+  border-radius: 0;
+}
+
+/* .form::after{
+  content: '';
+  width: 100%;
+  height: 1px;
+  bottom: 0;
+  position: absolute;
+  background-color: black;
+} */
+
+.icon{
+  right: 20px;
+  font-size: 30px;
+  position: absolute;
+}
+
+.suggestions{
+  /* display: none; */
+  top: 0;
+  width: 100%;
+  height: 40px;
+  /* border: 1px solid #0f0; */
+  /* padding: 0 20px; */
+  overflow: hidden;
+  position: absolute;
+  transition: top 0.5s, height 0.5s, padding 0.5s;
+  background-color: var(--Element-color);
+}
+
+.open .suggestions{
+  top: 60px;
+}
+
+.open .show-suggestions{
+  height: 200px;
+  padding-top: 50px;
+  box-shadow: 0 4px 8px var(--Shadow-color);
+}
+
+.suggestion{
+  background-color: #7c7c7c;
+  padding: 4px 20px;
+}
+
+/* .suggestion-text{
+
+} */

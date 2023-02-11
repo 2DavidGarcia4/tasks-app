@@ -1,0 +1,16 @@
+.options{
+  width: 100%;
+  height: 60px;
+  bottom: 0;
+  display: flex;
+  z-index: 10;
+  position: fixed;
+  box-shadow: 0 -1px 4px var(--Shadow-color);
+  align-items: center;
+  justify-content: space-around;
+  background-color: var(--Element-color);
+}
+
+.icon{
+  font-size: 30px;
+}
