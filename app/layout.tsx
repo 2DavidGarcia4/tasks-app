@@ -1,8 +1,7 @@
 import './globals.css'
 
 import Header from './components/shared/header/Header'
-import Options from './components/options/Options'
-import Search from './components/options/search/Search'
+import UserProvider from './context/userProvider'
 
 export default function RootLayout({children,}: {children: React.ReactNode}) {
   return (
@@ -13,10 +12,10 @@ export default function RootLayout({children,}: {children: React.ReactNode}) {
       */}
       <head />
       <body>
-        <Header />
-        <Options />
-        <Search />
-        {children}
+        <UserProvider>
+          <Header />
+          {children}
+        </UserProvider>
       </body>
     </html>
   )

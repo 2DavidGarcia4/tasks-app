@@ -1,15 +1,15 @@
 .main{
   display: flex;
+  padding: 80px 20px;
   align-items: center;
   justify-content: center;
-  padding: 80px 20px;
 }
 
 .element{
   width: 800px;
   height: 1000px;
-  background-color: var(--Element-color);
   padding: 10px;
-  border-radius: 6px;
   box-shadow: -2px 5px 8px #8f8f8f;
+  border-radius: 6px;
+  background-color: var(--Element-color);
 }
