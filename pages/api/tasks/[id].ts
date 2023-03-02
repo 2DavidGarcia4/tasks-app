@@ -54,9 +54,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           }
         })
 
-        console.log(id)
         const data = await prom.json()
-        console.log(data)
         return res.json(data)
 
       } catch (error: any) {

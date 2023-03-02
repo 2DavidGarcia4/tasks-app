@@ -23,8 +23,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     case 'POST':
       try {
         const { title, description, notificationAt } = body
-        console.log({title, description, notificationAt})
-        console.log(headers.authorization)
         const prom = await fetch(`${endPoint}tasks`, {
           method: 'POST',
           headers: {

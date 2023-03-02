@@ -8,7 +8,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     case 'POST': 
       try {
         const { name, email, password } = body
-        console.log({name, email, password})
         const prom = await fetch(`${endPoint}auth/register`, {
           method,
           headers: {
@@ -19,7 +18,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           })
         })
         const data = await prom.json()
-        console.log(data)
         return res.json(data)
 
       } catch (error: any) {
