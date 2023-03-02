@@ -1,0 +1,18 @@
+.tasks{
+  width: min(800px, 100%);
+  padding: 10px;
+  min-height: calc(100vh - 160px);
+  box-shadow: -2px 5px 8px #b8b8b8;
+  border-radius: 6px;
+  background-color: var(--Element-color);
+}
+
+.title{
+  margin: 10px 10px 20px 20px;
+}
+
+.list{
+  display: flex;
+  row-gap: 20px;
+  flex-direction: column;
+}

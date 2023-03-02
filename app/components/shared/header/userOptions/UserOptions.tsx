@@ -5,11 +5,27 @@ import styles from './userOptions.module.css'
 import Image from 'next/image'
 import Link from 'next/link'
 import { BiX } from 'react-icons/bi'
-import { useRef } from 'react'
+import { useRef, useEffect } from 'react'
+import { useUser } from 'app/context/contexts'
 
 export default function UserOptions(){
   const userOptions = useRef<HTMLDivElement>(null)
+  const { user, setUser } = useUser()
   
+  useEffect(()=> {
+    if(typeof localStorage != 'undefined') {
+      const token = localStorage.getItem('token')
+
+      fetch('/api/user', {
+        headers: {
+          'Authorization': `JWT ${token}`
+        }
+      }).then(prom=> prom.json()).then(res=> {
+        if(res.name) setUser(res)
+      }).catch(()=> console.error('Error in user options'))
+    }
+  }, [])
+
   const openAndCloseUserOptions = () => {
     let element = userOptions.current
     if(element){
@@ -19,22 +35,27 @@ export default function UserOptions(){
   
   return (
     <div className={styles.container}>
-      <Image onClick={openAndCloseUserOptions} className={styles.userImage} src={'/images/user.png'} alt='User icon' width={40} height={40} />
+      {user?.imageUrl ? 
+        <img onClick={openAndCloseUserOptions} className={styles.navImage} src={user.imageUrl} alt={user.name} /> :
+        <Image onClick={openAndCloseUserOptions} className={styles.navImage} src={'/images/user.png'} alt='User icon' width={40} height={40} />
+      }
 
       <div ref={userOptions} className={styles['user-options']}>
         <BiX onClick={openAndCloseUserOptions} className={styles.icon} />
-        {/* <img className={styles.userImage} src="https://cdn.discordapp.com/avatars/717420870267830382/400b2bc9bce2bdec52b4452934860214.webp" alt="User icon" /> */}
         <div className={styles['user-profile']}>
-          <Image className={styles.userImage} src={'/images/user.png'} alt='User icon' width={60} height={60} />
-          <p className={styles['user-name']}>{false ? 'Hola' : 'User'}</p>
+          {user?.imageUrl ? 
+            <img className={styles.userImage} src={user.imageUrl} alt={user.name} /> : 
+            <Image className={styles.userImage} src={'/images/user.png'} alt='User icon' width={70} height={70} />
+          }
+          <p className={styles['user-name']}>{user?.name || 'User'}</p>
         </div>
 
-        {false ? <Link className={styles['link-profile']} href={'/user/profile'}>Profile</Link> : (
+        {user ? <Link onClick={openAndCloseUserOptions} className={styles['link-profile']} href={'/user/profile'}>Profile</Link> : (
           <div className={styles['user-other-links']}>
-            <Link className={styles['user-link']} href={'/user/login'} >
+            <Link onClick={openAndCloseUserOptions} className={styles['user-link']} href={'/user/login'} >
               Log in
             </Link>
-            <Link className={styles['user-link']} href={'/user/register'} >
+            <Link onClick={openAndCloseUserOptions} className={styles['user-link']} href={'/user/register'} >
               Sign up
             </Link>
           </div>

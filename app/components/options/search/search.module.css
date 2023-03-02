@@ -72,10 +72,13 @@
 }
 
 .suggestion{
-  background-color: #7c7c7c;
   padding: 4px 20px;
 }
 
-/* .suggestion-text{
+.suggestion-text{
+  font-size: bold;
+}
 
-} */
+.suggestion-body{
+  background-color: #cfcfcf;
+}
