@@ -67,7 +67,7 @@ export default function LoginForm(){
         </span>
       )}
       <button className='button' >Log in</button>
-      <p>Don't have an account?, <Link href={'/user/register'}>sign up</Link></p>
+      <p>Don&rsquo;t have an account?, <Link href={'/user/register'}>sign up</Link></p>
     </form>
   )
 }

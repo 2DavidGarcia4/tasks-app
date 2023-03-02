@@ -4,12 +4,12 @@ import '../../../../styles/forms.css'
 import { FormEvent } from 'react'
 import { BiNote } from 'react-icons/bi'
 import { useRouter } from 'next/navigation'
-import { useTasks } from 'app/hooks/useTasks'
+import { useLogin } from 'app/hooks/useLogin'
 import { useUser } from 'app/context/contexts'
 
 export default function RegisterForm(){
   const router = useRouter()
-  const isLoged = useTasks().isLoged()
+  const isLoged = useLogin()
   const { setUser } = useUser()
   
   

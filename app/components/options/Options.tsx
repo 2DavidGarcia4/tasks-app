@@ -8,17 +8,16 @@ import filterTasksStyles from './filter/filterTasks.module.css'
 import { BiSearch } from 'react-icons/bi'
 import { BiPlus } from 'react-icons/bi'
 import { BiFilter } from 'react-icons/bi'
-import { useTasks } from 'app/hooks/useTasks'
+import { useLogin } from 'app/hooks/useLogin'
 import { useRouter } from 'next/navigation'
 
 
 export default function Options(){
   const router = useRouter()
-  const {isLoged} = useTasks()
-  const loged = isLoged()
+  const isLoged = useLogin()
 
   const openAndCloseSearch = () => {
-    if(!loged) return router.push('/user/login/')
+    if(!isLoged) return router.push('/user/login/')
       
     
     if(typeof document != 'undefined'){
@@ -32,7 +31,7 @@ export default function Options(){
   }
 
   const showForm = () => {
-    if(!loged) return router.push('/user/login/')
+    if(!isLoged) return router.push('/user/login/')
     if(typeof document != 'undefined'){
       const createTask = document.querySelector('.'+createTaskStyles.container)
       createTask?.classList.add(createTaskStyles.show)
@@ -40,7 +39,7 @@ export default function Options(){
   }
 
   const showFilter = () => {
-    if(!loged) return router.push('/user/login/')
+    if(!isLoged) return router.push('/user/login/')
     if(typeof document != 'undefined'){
       const createTask = document.querySelector('.'+filterTasksStyles.filter)
       createTask?.classList.add(filterTasksStyles.show)

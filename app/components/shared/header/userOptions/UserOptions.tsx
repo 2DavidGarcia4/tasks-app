@@ -24,7 +24,7 @@ export default function UserOptions(){
         if(res.name) setUser(res)
       }).catch(()=> console.error('Error in user options'))
     }
-  }, [])
+  }, [setUser])
 
   const openAndCloseUserOptions = () => {
     let element = userOptions.current
