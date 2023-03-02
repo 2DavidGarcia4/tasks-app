@@ -28,7 +28,7 @@ export default function ShowTask({params}: {params: {id: string}}){
       setTask(res)
       // setTitle(res.title)
     }).catch(()=> console.error('Error in task page'))
-  }, [])
+  }, [id])
 
   const updateTask = () => {
     setUpdate(!update)

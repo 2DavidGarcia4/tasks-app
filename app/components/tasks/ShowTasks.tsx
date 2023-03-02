@@ -24,7 +24,7 @@ export default function ShowTasks(){
       })
       .catch()
     }
-  }, [])
+  }, [setTasks])
 
   return (
     <div className={styles.tasks}>
