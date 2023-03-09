@@ -1,9 +1,9 @@
 'use client'
 
 import styles from './profile.module.css'
-import { useEffect, useState, ChangeEvent, useRef } from 'react'
+import { useState, ChangeEvent, useRef } from 'react'
 import { BiEdit, BiSave } from 'react-icons/bi'
-import { useUser } from 'app/context/contexts'
+import { useNotifications, useUser } from 'app/context/contexts'
 import Image from 'next/image'
 import UpdateImage from '../components/updateImage/UpdateImage'
 
@@ -14,7 +14,8 @@ export default function UserPage(){
   const inputRef = useRef<HTMLInputElement>(null)
   const [edit, setEdit] = useState(false)
   const [updateImage, setUpdateImage] = useState(false)
-  const { user } = useUser()
+  const { user, setUser } = useUser()
+  const { createNotification } = useNotifications()
   const [newName, setNewName] = useState('')
 
   const activeInput = () => {
@@ -28,6 +29,7 @@ export default function UserPage(){
     if(inputRef.current){
       inputRef.current.classList.toggle(styles.active)
       inputRef.current.blur()
+      setEdit(false)
 
       if(newName){
         fetch('/api/user', {
@@ -38,8 +40,20 @@ export default function UserPage(){
           },
           body: JSON.stringify({name: newName})
         }).then(prom=> prom.json()).then(res=> {
-          // console.log(res)
-        }).catch(()=> console.error('Error in update user name'))
+          if(res.name){
+            setUser(res)
+            createNotification({
+              type: 'success',
+              content: 'Updated name'
+            })
+          }
+        }).catch(()=> {
+          console.error('Error in update user name')
+          createNotification({
+            type: 'error',
+            content: 'Error updating name'
+          })
+        })
       }
     }
   }
@@ -72,7 +86,7 @@ export default function UserPage(){
         </div>
         <div className={styles['user-details']}>
           <div className={styles['user-name']}>
-            <input ref={inputRef} onChange={handlerChange} onBlur={desactiveInput} type="text" defaultValue={user?.name} /> 
+            <input ref={inputRef} onChange={handlerChange} onBlur={desactiveInput} type="text" defaultValue={user?.name} minLength={6} maxLength={100} /> 
             {edit ? <BiSave className={styles.icon} onClick={desactiveInput} /> : <BiEdit className={styles.icon} onClick={activeInput} />}
           </div>
           <div className={styles['user-email']}>

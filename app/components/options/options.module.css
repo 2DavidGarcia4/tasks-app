@@ -5,12 +5,94 @@
   display: flex;
   z-index: 10;
   position: fixed;
+  transition: background-color 0.6s ease, box-shadow 0.6s;
   box-shadow: 0 -1px 4px var(--Shadow-color);
   align-items: center;
   justify-content: space-around;
   background-color: var(--Element-color);
 }
 
+.option{
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .icon{
+  color: var(--Text-color);
+  transition: color 0.5s;
   font-size: 30px;
+}
+
+
+@media (min-width: 600px) {
+  .options{
+    top: 60px;
+    left: 0;
+    width: 50px;
+    height: calc(100% - 60px);
+    row-gap: 40px;
+    padding: 40px 0;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .option{
+    cursor: pointer;
+    position: relative;
+  }
+
+  .option::after{
+    pointer-events: none;
+    left: 64px;
+    content: 'Search';
+    color: var(--Text-color);
+    position: absolute;
+    padding: 4px 8px;
+    font-size: 14px;
+    border-radius: 4px;
+    background-color: var(--Tooltip);
+    opacity: 0;
+    transition: opacity 0.4s, transform 0.4s;
+  }
+
+  .option:nth-child(2)::after{
+    content: 'Create';
+  }
+
+  .option:nth-child(3)::after{
+    content: 'Filter';
+  }
+
+  .option::before{
+    pointer-events: none;
+    left: 90%;
+    content: '';
+    position: absolute;
+    border-right: 10px solid var(--Tooltip);
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    opacity: 0;
+    transition: opacity 0.4s, transform 0.4s;
+  }
+
+  .option:hover::after{
+    opacity: 1;
+    transform: translateX(10px);
+  }
+
+  .option:hover::before{
+    opacity: 1;
+    transform: translateX(10px);
+  }
+
+  .option:hover .icon{
+    color: var(--Principal-color);
+  }
+  
+  .icon{
+    font-size: 26px;
+  }
 }

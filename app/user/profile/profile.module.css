@@ -12,11 +12,12 @@
   padding: 20px;
   display: flex;
   flex-wrap: wrap;
-  box-shadow: -2px 3px 8px var(--Shadow-color);
+  box-shadow: -2px 4px 10px var(--Shadow-color);
   align-items: center;
   border-radius: 6px;
   justify-content: center;
   background-color: var(--Element-color);
+  transition: background-color 0.6s ease, box-shadow 0.6s;
 }
 
 .user-image img{
@@ -26,6 +27,8 @@
 }
 
 .user-details{
+  color: var(--Text-color);
+  transition: color 0.5s;
   display: flex;
   row-gap: 30px;
   flex-direction: column
@@ -41,12 +44,14 @@
 }
 
 .user-name input{
+  color: var(--Text-color);
   width: 160px;
   cursor: default;
   border: none;
   display: flex;
   outline: none;
   font-size: 16px;
+  transition: color 0.5s;
   font-weight: 500;
   pointer-events: none;
   background-color: transparent;
@@ -63,4 +68,11 @@
 
 .user-email p{
   font-weight: 500;
+}
+
+
+@media (min-width: 600px){
+  .user-image, .icon{
+    cursor: pointer;
+  }
 }

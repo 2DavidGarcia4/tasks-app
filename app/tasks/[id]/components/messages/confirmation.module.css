@@ -12,18 +12,26 @@
 }
 
 .message {
+  color: var(--Text-color);
   width: min(300px, 100%);
-  padding: 40px 20px;
   display: flex;
+  padding: 40px 20px 20px 20px;
   row-gap: 40px;
   position: relative;
   transform: scale(0);
+  animation: show_message 0.5s ease forwards;
   transition: transform 0.5s;
+  box-shadow: -2px 4px 8px var(--Shadow-color);
   border-radius: 6px;
   flex-direction: column;
   transition-delay: 0.3s;
   background-color: var(--Element-color);
-  transform: scale(1);
+}
+
+@keyframes show_message {
+  100%{
+    transform: scale(1);
+  }
 }
 
 .text{
@@ -33,7 +41,7 @@
 
 .buttons{
   display: flex;
-  column-gap: 10px;
+  column-gap: 16px;
 }
 
 .buttons button{
@@ -45,19 +53,42 @@
   font-size: 14px;
   font-weight: bold;
   column-gap: 4px;
-  box-shadow: -1px 2px 6px var(--Shadow-color);
   align-items: center;
   border-radius: 5px;
   justify-content: center;
 }
 
-/* .show .form {
-} */
-
 .confirm{
+  box-shadow: 0 0 6px var(--Green-color);
   background-color: var(--Green-color);
 }
 
 .cancel{
+  box-shadow: 0 0 4px var(--Red-color);
   background-color: var(--Red-color);
+}
+
+.icon{
+  font-size: 20px;
+}
+
+
+@media (min-width: 600px){
+  .confirm, .cancel{
+    cursor: pointer;
+  }
+
+  .buttons button{
+    transition: box-shadow 0.6s, transform 0.5s;
+  }
+
+  .confirm:hover{
+    transform: scale(1.05);
+    box-shadow: -1px 2px 6px var(--Green-color);
+  }
+
+  .cancel:hover{
+    transform: scale(1.05);
+    box-shadow: -1px 2px 6px var(--Red-color);
+  }
 }

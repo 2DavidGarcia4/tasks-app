@@ -4,24 +4,40 @@ import styles from './userOptions.module.css'
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { BiX } from 'react-icons/bi'
-import { useRef, useEffect } from 'react'
-import { useUser } from 'app/context/contexts'
+import { BiX, BiMoon, BiSun } from 'react-icons/bi'
+import { useRef, useEffect, useState } from 'react'
+import { useNotifications, useUser } from 'app/context/contexts'
 
 export default function UserOptions(){
   const userOptions = useRef<HTMLDivElement>(null)
+  const circleThemeRef = useRef<HTMLDivElement>(null)
+  const [isDark, setIsDark] = useState(false)
   const { user, setUser } = useUser()
-  
+  const { createNotification } = useNotifications()
+
   useEffect(()=> {
     if(typeof localStorage != 'undefined') {
       const token = localStorage.getItem('token')
+      let localDark = JSON.parse(localStorage.getItem('dark') || 'false')
+
+      if(localDark) {
+        document.body.classList.add('dark')
+        circleThemeRef.current?.classList.add(styles.dark)
+        setIsDark(true)
+      }
 
       fetch('/api/user', {
         headers: {
           'Authorization': `JWT ${token}`
         }
       }).then(prom=> prom.json()).then(res=> {
-        if(res.name) setUser(res)
+        if(res.name) {
+          setUser(res)
+          createNotification({
+            type: 'success',
+            content: 'Uploaded user data'
+          })
+        }
       }).catch(()=> console.error('Error in user options'))
     }
   }, [setUser])
@@ -31,6 +47,22 @@ export default function UserOptions(){
     if(element){
       element.classList.toggle(styles.open)
     }
+  }
+
+  const toggleTheme = () => {
+    if(typeof document != 'undefined'){
+      document.body.classList.toggle('dark')
+    }
+
+    if(typeof localStorage != 'undefined'){
+      localStorage.setItem('dark', `${!isDark}`)
+    }
+
+    if(circleThemeRef.current){
+      circleThemeRef.current.classList.toggle(styles.dark)
+    }
+
+    setIsDark(!isDark)
   }
   
   return (
@@ -42,6 +74,15 @@ export default function UserOptions(){
 
       <div ref={userOptions} className={styles['user-options']}>
         <BiX onClick={openAndCloseUserOptions} className={styles.icon} />
+        <div className={styles['switch-theme']} onClick={toggleTheme} >
+          <div ref={circleThemeRef} className={styles['circle-theme']}>
+            { isDark ?
+              <BiMoon className={styles['icon-theme']} /> : 
+              <BiSun className={styles['icon-theme']} />
+            } 
+          </div>
+        </div>
+
         <div className={styles['user-profile']}>
           {user?.imageUrl ? 
             <img className={styles.userImage} src={user.imageUrl} alt={user.name} /> : 

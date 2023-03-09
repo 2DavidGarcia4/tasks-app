@@ -1,8 +1,9 @@
 .form {
+  color: var(--Text-color);
   width: min(300px, 100%);
-  padding: 30px 10px;
+  padding: 38px 20px;
   display: flex;
-  row-gap: 20px;
+  row-gap: 34px;
   position: relative;
   border-radius: 6px;
   flex-direction: column;
@@ -10,7 +11,21 @@
   background-color: var(--Element-color);
 }
 
+.title{
+  display: flex;
+  column-gap: 4px;
+  align-items: center;
+  justify-content: center;
+}
+
+.options{
+  display: flex;
+  row-gap: 24px;
+  flex-direction: column;
+}
+
 .form-page{
+  transition: background-color 0.6s ease, box-shadow 0.6s ease, color 0.5s;
   box-shadow: -2px 6px 10px var(--Shadow-color);
 }
 
@@ -30,19 +45,51 @@
   text-decoration: underline;
 }
 
-
-.form div{
+.option{
+  width: 100%;
   display: flex;
-  row-gap: 4px;
+  row-gap: 8px;
+  position: relative;
   flex-direction: column;
 }
 
-.input{
+.label{
   font-size: 14px;
+  padding-left: 10px;
+  font-weight: bold;
+  transition: color 0.5s;
 }
 
 .input, .textarea{
-  padding: 4px 10px;
+  color: var(--Text-color);
+  width: 100%;
+  height: 40px;
+  resize: none;
+  outline: none;
+  border: 1px solid var(--Title-color);
+  padding: 10px;
+  max-height: 200px;
+  transition: color 0.5s, border 0.5s, box-shadow 0.5s;
+  font-weight: 500;
+  line-height: 18px;
+  border-radius: 6px;
+  background-color: transparent;
+}
+
+.input:is(:focus, :valid), .textarea:is(:focus, :valid){
+  box-shadow: 0 0 4px var(--Principal-color),
+    inset 0 0 4px var(--Principal-color);
+  border-color: var(--Principal-color);
+}
+
+::-webkit-calendar-picker-indicator{
+  padding: 4px;
+  border-radius: 4px;
+  background-color: var(--Text-color);
+}
+
+.textarea::-webkit-scrollbar{
+  width: 0px;
 }
 
 .error{
@@ -51,6 +98,7 @@
 }
 
 .button{
+  color: black;
   width: 100%;
   height: 34px;
   display: flex;
@@ -58,9 +106,42 @@
   justify-content: center;
   column-gap: 4px;
   border: none;
-  color: black;
   margin: 0 auto;
   font-size: 14px;
+  box-shadow: 0 0 6px var(--Green-color);
+  font-weight: bold;
   border-radius: 4px;
   background-color: var(--Green-color);
+}
+
+.footer{
+  font-size: 14px;
+  font-weight: bold;
+}
+
+
+@media (min-width: 600px) {
+  .icon{
+    cursor: pointer;
+    transition: color 0.5s, transform 0.5s;
+  }
+
+  .icon:hover{
+    color: #eb0b0b;
+    transform: scale(1.3);
+  }
+
+  .button {
+    cursor: pointer;
+    transition: box-shadow 0.4s, transform 0.4s, color 0.5s;
+  }
+  
+  .button:hover{
+    transform: scale(1.04);
+    box-shadow: -1.4px 3px 8px var(--Green-color);
+  }
+
+  ::-webkit-calendar-picker-indicator{
+    cursor: pointer;
+  }
 }

@@ -22,8 +22,10 @@ export default function FilterTasks(){
   const selectOptionFilter = ({currentTarget}: MouseEvent<HTMLLIElement>) => {
     if(typeof document != 'undefined'){
       const options = document.querySelectorAll('.'+styles.option)
+      
       if(options && !currentTarget.classList.contains(styles.selected)){
         const { id: type } = currentTarget
+        
         fetch('/api/tasks', {
           headers: {
             'Authorization': `JWT ${token}`

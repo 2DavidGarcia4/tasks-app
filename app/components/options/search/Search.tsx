@@ -41,6 +41,8 @@ export default function Search(){
       element.classList.remove(styles.open)
       if(inputRef.current) inputRef.current.value = ''
     }
+    suggestionListRef.current?.classList.remove(styles['show-suggestions'])
+    setSuggestions([])
   }  
 
   const tipingInput = ({target: {value}}: ChangeEvent<HTMLInputElement>) => {

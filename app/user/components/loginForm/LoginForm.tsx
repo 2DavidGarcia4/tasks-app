@@ -5,12 +5,13 @@ import { FormEvent, useState } from 'react'
 import { BiLogIn, BiError } from 'react-icons/bi'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useUser } from 'app/context/contexts'
+import { useNotifications, useUser } from 'app/context/contexts'
 
 export default function LoginForm(){
   const router = useRouter()
   const [correctCredentials, setCorrectCredentials] = useState(true)
   const { setUser } = useUser()
+  const { createNotification } = useNotifications()
 
   const handleSubmint = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -32,6 +33,11 @@ export default function LoginForm(){
           localStorage.setItem('token', res.token)
         }
 
+        createNotification({
+          type: 'success',
+          content: 'Registered successfully'
+        })
+
         fetch('/api/user', {
           headers: {
             'Authorization': `JWT ${res.token}`
@@ -52,15 +58,19 @@ export default function LoginForm(){
 
   return (
     <form onSubmit={handleSubmint} className='form form-page'>
-      <h3><BiLogIn/> Log in</h3>
-      <div>
-        <label className='label' htmlFor="email" >Email</label>
-        <input className='input' id='email' type="email" placeholder='Your email' name='email' required={true} minLength={3} maxLength={150} />
+      <h3 className='title' ><BiLogIn/> Log in</h3>
+
+      <div className="options">
+        <div className='option'>
+          <label className='label' htmlFor="email" >Email</label>
+          <input className='input' id='email' type="email"  name='email' placeholder='Your email' required={true} minLength={3} maxLength={150} />
+        </div>
+        <div className='option'>
+          <label className='label' htmlFor="password" >Password</label>
+          <input className='input' id='password' type="password"  name='password' placeholder='Your password' required={true} minLength={4} maxLength={30} />
+        </div>
       </div>
-      <div>
-        <label className='label' htmlFor="password" >Password</label>
-        <input className='input' id='password' type="password" placeholder='Your password' name='password' required={true} minLength={4} maxLength={30} />
-      </div>
+
       {!correctCredentials && (
         <span className='error' >
           <BiError /> Email or password was not correct

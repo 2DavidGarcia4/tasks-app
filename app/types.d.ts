@@ -15,3 +15,16 @@ export type User = {
   password: string
   imageUrl: string | null
 }
+
+export interface Notification {
+  id: string
+  type: 'success' | 'warning' | 'error' | 'info'
+  time: number
+  content: string
+}
+
+export interface ConfigCreateNotifi {
+  type: Notification['type']
+  time?: number
+  content: string
+}

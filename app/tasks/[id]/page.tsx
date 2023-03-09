@@ -4,7 +4,7 @@ import styles from './task.module.css'
 
 import { useState, useEffect } from 'react'
 import { Task } from 'app/types'
-import { BiPen, BiTrash } from 'react-icons/bi'
+import { BiPen, BiTrash, BiStats } from 'react-icons/bi'
 import Confirmation from './components/messages/Confirmation'
 import { useRouter } from 'next/navigation'
 import UpdateTask from './components/updateTask/UpdateTask'
@@ -26,7 +26,6 @@ export default function ShowTask({params}: {params: {id: string}}){
       }
     }).then(prom=> prom.json()).then(res=> {
       setTask(res)
-      // setTitle(res.title)
     }).catch(()=> console.error('Error in task page'))
   }, [id])
 
@@ -44,31 +43,34 @@ export default function ShowTask({params}: {params: {id: string}}){
       {update && <UpdateTask task={task} setTask={setTask} toggle={updateTask} token={token} />}
 
       <div className={styles.details}>
-        <p className={styles.status} >{task?.isCompleted ? `Completed task at ${new Date(task?.completedAt || '').toLocaleString()}` : `Incomplete task`}</p>
-        <div>
-          <h4 className={styles.title}>Title:</h4>
-          <p className={styles.content}>{task?.title}</p>
+        <i className={styles.status} ><BiStats />  {task?.isCompleted ? `Completed task at ${new Date(task?.completedAt || '').toLocaleString()}` : `Incomplete task`}</i>
+        <div className={styles.option}>
+          <p className={styles.title}>Title:</p>
+          <h2 className={styles.content}>{task?.title}</h2>
         </div>
-        <div>
-          <h4 className={styles.title}>Description:</h4>
+        <div className={styles.option}>
+          <p className={styles.title}>Description:</p>
           <p className={styles.content}>{task?.description}</p>
         </div>
-        <div>
-          <h4 className={styles.title}>Created at:</h4>
-          <p className={styles.content}>{`${new Date(task?.createdAt || '').toLocaleString()}`}</p>
+
+        <div className={styles.dates}>
+          <div className={styles['date-option']}>
+            <p className={styles.title}>Created at:</p>
+            <p className={styles.content}>{`${new Date(task?.createdAt || '').toLocaleString()}`}</p>
+          </div>
+          {
+            task?.notificationAt && (
+              <div className={styles['date-option']}>
+                <p className={styles.title}>Notification at:</p>
+                <p className={styles.content}>{`${new Date(task?.notificationAt || '').toLocaleString()}`}</p>
+              </div>
+            )
+          }
         </div>
-        {
-          task?.notificationAt && (
-            <div>
-              <h4 className={styles.title}>Notification at:</h4>
-              <p className={styles.content}>{`${new Date(task?.notificationAt || '').toLocaleString()}`}</p>
-            </div>
-          )
-        }
 
         <div className={styles.buttons}>
-          <button onClick={updateTask} className={styles.update}><BiPen />  Update</button>
-          <button onClick={deleteTask} className={styles.delete}><BiTrash /> Delete</button>
+          <button onClick={updateTask} className={styles.update}><BiPen className={styles.icon} />  Update</button>
+          <button onClick={deleteTask} className={styles.delete}><BiTrash className={styles.icon} /> Delete</button>
         </div>
         
       </div>

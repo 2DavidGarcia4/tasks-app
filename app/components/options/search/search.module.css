@@ -1,10 +1,10 @@
 .search{
   top: 0;
-  width: 100%;
+  right: 0;
+  width: calc(100% - 50px);
   height: 60px;
   position: fixed;
-  transition: padding 0.5s, box-shadow 0.5s;
-  background-color: var(--Element-color);
+  transition: padding 0.5s, box-shadow 0.6s;
 }
 
 .open{
@@ -22,42 +22,33 @@
 }
 
 .input{
-  background-color: var(--Element-color);
+  color: var(--Text-color);
   width: 100%;
   height: 100%;
   padding: 0 20px;
   outline: none;
-  /* border: none; */
+  border: none;
   position: relative;
   font-size: 16px;
   border-radius: 0;
+  transition: background-color 0.6s ease, color 0.5s;
+  background-color: var(--Element-color);
 }
 
-/* .form::after{
-  content: '';
-  width: 100%;
-  height: 1px;
-  bottom: 0;
-  position: absolute;
-  background-color: black;
-} */
-
 .icon{
+  color: var(--Text-color);
   right: 20px;
   font-size: 30px;
   position: absolute;
 }
 
 .suggestions{
-  /* display: none; */
   top: 0;
   width: 100%;
   height: 40px;
-  /* border: 1px solid #0f0; */
-  /* padding: 0 20px; */
   overflow: hidden;
   position: absolute;
-  transition: top 0.5s, height 0.5s, padding 0.5s;
+  transition: top 0.5s, height 0.5s, padding 0.5s, background-color 0.6s ease, box-shadow 0.6s;
   background-color: var(--Element-color);
 }
 
@@ -71,7 +62,19 @@
   box-shadow: 0 4px 8px var(--Shadow-color);
 }
 
+.show-suggestions::after{
+  top: 40px;
+  content: '';
+  width: 100%;
+  height: 1px;
+  position: absolute;
+  transition: background-color 0.6s ease;
+  background-color: var(--Title-color);
+}
+
 .suggestion{
+  color: var(--Text-color);
+  transition: color 0.5s;
   padding: 4px 20px;
 }
 
@@ -80,5 +83,17 @@
 }
 
 .suggestion-body{
-  background-color: #cfcfcf;
+  transition: background-color 0.6s ease;
+  background-color: var(--Suggestion-bg);
+}
+
+
+@media (min-width: 600px) {
+  .icon, .suggestion{
+    cursor: pointer;
+  }
+
+  .suggestion:hover{
+    background-color: var(--Shadow-color);
+  }
 }

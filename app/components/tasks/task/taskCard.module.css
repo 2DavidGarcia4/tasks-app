@@ -1,14 +1,26 @@
 .task{
   gap: 20px;
-  border: 1px solid #7c7c7c;
+  /* border: 1px solid #7c7c7c; */
   padding: 10px;
-  min-height: 90px;
   display: flex;
   position: relative;
-  transition: background-color 0.4s, text 0.4s;
-  border-radius: 4px;
+  transform: translateY(-100%);
+  animation: move_task 0.5s ease forwards;
+  min-height: 90px;
+  transition: background-color 0.4s ease, color 5s;
+  border-radius: 5px;
   justify-content: space-between;
-  background-color: #e2e2e2;
+  background-color: var(--Task-color);
+}
+
+@keyframes move_task {
+  100%{
+    transform: translateY(0);
+  }
+}
+
+.completed{
+  background-color: var(--Completed-color);
 }
 
 .task div:nth-child(2){
@@ -23,20 +35,34 @@
 }
 
 .title{
-  color: #747474;
+  color: var(--Title-color);
   display: flex;
+  column-gap: 4px;
+  transition: color 0.5s;
   align-items: center;
-  column-gap: 2px;
   margin-bottom: 10px;
 }
 
 .icon{
-  color: black;
+  color: var(--Text-color);
   font-size: 20px;
+  transition: color 0.5s;
 }
 
+.description{
+  padding-left: 24px;
+  color: var(--Text-color);
+  transition: color 0.5s;
+}
 
 .checkbox{
   top: 0;
   right: 0;
+}
+
+
+@media (min-width: 600px){
+  .checkbox input{
+    cursor: pointer;
+  }
 }

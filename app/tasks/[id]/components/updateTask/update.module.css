@@ -21,10 +21,3 @@
   flex-direction: column;
   background-color: var(--Element-color);
 }
-
-.close{
-  top: 10px;
-  right: 10px;
-  font-size: 26px;
-  position: absolute;
-}

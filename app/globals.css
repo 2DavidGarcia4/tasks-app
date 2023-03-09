@@ -3,9 +3,34 @@
   --Secondary-color: #FED62E;
   --Background-color: #E8E2E2;
   --Element-color: #F5F5F5;
+  --Task-color: #c3d1d6;
   --Shadow-color: #a0a0a0;
   --Green-color: #03C988;
   --Red-color: #ee2c2c;
+  --Circle-theme: #F7C04A;
+  --Text-color: #0e0e0e;
+  --Title-color: #74736a;
+  --Completed-color: #a0dd5a;
+  --Tooltip: #fff;
+  --Suggestion-bg: #cfcfcf;
+}
+
+body.dark{
+  --Principal-color: #2a91d6;
+  --Secondary-color: #dfba27;
+  --Background-color: #434242;
+  --Element-color: #222222;
+  --Task-color: #3e4447;
+  --Shadow-color: #181717;
+  --Green-color: #019664;
+
+  --Circle-theme: #4e89ac;
+  --Text-color: #d8d8d8;
+  --Title-color: #979797;
+  --Completed-color: #577c2b;
+
+  --Tooltip: #0c0c0c;
+  --Suggestion-bg: #525252;
 }
 
 
@@ -23,8 +48,18 @@ html{
 }
 
 body {
-  /* overflow-x: hidden; */
   background-color: var(--Background-color);
+  transition: background-color 0.5s;
+}
+
+body::-webkit-scrollbar {
+  width: 14px;
+  background: var(--Background-color);
+}
+
+body::-webkit-scrollbar-thumb {
+  background: var(--Title-color);
+  border-radius: 14px;
 }
 
 a {

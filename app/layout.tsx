@@ -2,6 +2,8 @@ import './globals.css'
 
 import Header from './components/shared/header/Header'
 import UserProvider from './context/userProvider'
+import Notifications from './components/notifications/Notifications'
+import NotificationsProvider from './context/notificationProvider'
 
 export default function RootLayout({children,}: {children: React.ReactNode}) {
   return (
@@ -12,10 +14,13 @@ export default function RootLayout({children,}: {children: React.ReactNode}) {
       */}
       <head />
       <body>
-        <UserProvider>
-          <Header />
-          {children}
-        </UserProvider>
+        <NotificationsProvider>
+          <UserProvider>
+            <Header />
+            <Notifications />
+            {children}
+          </UserProvider>
+        </NotificationsProvider>
       </body>
     </html>
   )

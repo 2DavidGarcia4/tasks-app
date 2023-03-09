@@ -5,7 +5,7 @@ import styles from './showTasks.module.css'
 import { useEffect } from 'react'
 import TaskCard from "./task/TaskCard"
 import { Task } from 'app/types'
-import { useTasks } from 'app/context/contexts'
+import { useNotifications, useTasks } from 'app/context/contexts'
 
 export default function ShowTasks(){
   const { tasks, setTasks } = useTasks()

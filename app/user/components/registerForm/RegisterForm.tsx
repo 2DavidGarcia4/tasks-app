@@ -5,12 +5,14 @@ import { FormEvent } from 'react'
 import { BiNote } from 'react-icons/bi'
 import { useRouter } from 'next/navigation'
 import { useLogin } from 'app/hooks/useLogin'
-import { useUser } from 'app/context/contexts'
+import { useNotifications, useUser } from 'app/context/contexts'
+import Link from 'next/link'
 
 export default function RegisterForm(){
   const router = useRouter()
   const isLoged = useLogin()
   const { setUser } = useUser()
+  const { createNotification } = useNotifications()
   
   
   const handleSubmint = (event: FormEvent<HTMLFormElement>) => {
@@ -31,7 +33,14 @@ export default function RegisterForm(){
         password
       })
     }).then(prom=> prom.json()).then(res=> {
-      if(res.name) setUser(res)
+      if(res.name) {
+        setUser(res)
+        createNotification({
+          type: 'success',
+          content: 'Registered successfully'
+        })
+      }
+
       fetch(`/api/login`, {
         method: 'POST',
         headers: {
@@ -56,21 +65,26 @@ export default function RegisterForm(){
 
   return (
     <form onSubmit={handleSubmint} className='form form-page'>
-      <h3><BiNote/> Sign up</h3>
-      <div>
-        <label className='label' htmlFor="userName" >User name</label>
-        <input className='input' id='userName' type="text" placeholder='Your user name' name='userName' required={true} minLength={3} maxLength={100} />
-      </div>
-      <div>
-        <label className='label' htmlFor="email" >Email</label>
-        <input className='input' id='email' type="email" placeholder='Your email' name='email' required={true} minLength={3} maxLength={150} />
-      </div>
-      <div>
-        <label className='label' htmlFor="password" >Password</label>
-        <input className='input' id='password' type="password" placeholder='Your password' name='password' required={true} minLength={4} maxLength={30} />
+      <h3 className='title' ><BiNote/> Sign up</h3>
+
+      <div className='options'>
+        <div className='option'>
+          <label className='label' htmlFor="userName" >User name</label>
+          <input className='input' id='userName' type="text" name='userName' placeholder='Your name' required={true} minLength={3} maxLength={100} />
+        </div>
+        <div className='option'>
+          <label className='label' htmlFor="email" >Email</label>
+          <input className='input' id='email' type="email" name='email' placeholder='Your email' required={true} />
+        </div>
+        <div className='option'>
+          <label className='label' htmlFor="password" >Password</label>
+          <input className='input' id='password' type="password" name='password' placeholder='Your password' required={true} minLength={6} maxLength={20} />
+        </div>
+
       </div>
       
       <button className='button' >Sign up</button>
+      <p className='footer'>You have an account?, <Link href={'/user/login'}>log in</Link></p>
     </form>
   )
 }

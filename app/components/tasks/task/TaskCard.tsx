@@ -12,8 +12,7 @@ if(typeof localStorage != 'undefined') token = localStorage.getItem('token')
 
 export default function TaskCard({task}: {task: Task}){
   const taskRef = useRef<HTMLLIElement>(null)
-
-  const [color, setColor] = useState<undefined | string>(task.isCompleted ? '#B5F1CC' : undefined)
+  const [isCompleted, setIsCompleted] = useState(task.isCompleted)
 
   const checking = ({target: {checked}}: ChangeEvent<HTMLInputElement>) => {
     fetch(`/api/tasks/${task.id}`, {
@@ -26,21 +25,19 @@ export default function TaskCard({task}: {task: Task}){
         isCompleted: checked
       })
     })
-    .catch(()=> '')
+    .catch(()=> console.error('Error in update task from task component.'))
+    
 
     task.isCompleted = checked
-    if(checked) {
-      setColor('#B5F1CC')
-    }else {
-      setColor(undefined)
-    }
+    taskRef.current?.classList.toggle(`${styles.completed}`)
+    setIsCompleted(!isCompleted)
   }
 
   return (
-    <li className={styles.task} style={{backgroundColor: color}} draggable={true} >
+    <li ref={taskRef} className={`${styles.task} ${task.isCompleted && styles.completed}`} draggable={true} >
       <div>
         <Link href={`/tasks/${task.id}`}>
-          <h3 className={styles.title}>{task.isCompleted ? <BiCheck className={`${styles.icon} ${styles.check}`} /> : <BiTime className={styles.icon} />} {task.title}</h3>
+          <h3 className={styles.title}>{isCompleted ? <BiCheck className={`${styles.icon} ${styles.check}`} /> : <BiTime className={styles.icon} />} {task.title}</h3>
         </Link>
         <p className={styles.description}>{task.description}</p>
       </div>

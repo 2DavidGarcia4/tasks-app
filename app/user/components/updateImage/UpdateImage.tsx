@@ -3,10 +3,11 @@ import styles from './updateImage.module.css'
 
 import { Dispatch, SetStateAction, FormEvent } from 'react'
 import { BiX, BiLoader } from 'react-icons/bi'
-import { useUser } from 'app/context/contexts'
+import { useNotifications, useUser } from 'app/context/contexts'
 
 export default function UpdateImage({setUpdateImage, imageUrl, token}: {setUpdateImage: Dispatch<SetStateAction<boolean>>, imageUrl: string | null, token: string | null}){
   const { setUser } = useUser()
+  const { createNotification } = useNotifications()
 
   const close = () => {
     setUpdateImage(false)
@@ -17,6 +18,7 @@ export default function UpdateImage({setUpdateImage, imageUrl, token}: {setUpdat
 
     const imageUrl = event.currentTarget.imageUrl.value
     
+    
     fetch(`/api/user`, {
       method: 'PUT',
       headers: {
@@ -25,26 +27,30 @@ export default function UpdateImage({setUpdateImage, imageUrl, token}: {setUpdat
       },
       body: JSON.stringify({imageUrl})
     }).then(prom=> prom.json()).then(res=> {
-      if(res.length){
-        fetch(`/api/user`, {
-          headers: {
-            'Authorization': `JWT ${token}`
-          }
-        }).then(prom=> prom.json()).then(resu=>{
-          setUser(resu)
-        }).catch(()=> console.error('Error in get user after image update'))
+      if(res.name){
+        setUser(res)
+        createNotification({
+          type: 'success',
+          content: 'Updated image'
+        })
       }
       close()
-    }).catch(()=> console.error('Error in update user image'))
+    }).catch(()=> {
+      console.error('Error in update user image')
+      createNotification({
+        type: 'error',
+        content: 'Error updating image'
+      })
+    })
   } 
 
   return (
     <div className={styles.container}>
       <form onSubmit={handleSubmit} className={`${styles.form} form form-page`}>
-        <BiX onClick={close} className={styles.close} />
+        <BiX onClick={close} className='icon' />
 
-        <div className={styles.inputs}>
-          <div>
+        <div className='options'>
+          <div className='option'>
             <label className='label' htmlFor="imageUrl" >Image url</label>
             <input className='input' id='imageUrl' type="url" defaultValue={imageUrl || undefined} name='imageUrl' required={true} minLength={3} />
           </div>

@@ -1,17 +1,17 @@
-// 'use client'
-
 import '../../../../../styles/forms.css'
 import styles from './update.module.css'
 
-import { Dispatch, FormEvent, SetStateAction } from 'react'
+import { Dispatch, FormEvent, SetStateAction, useRef, KeyboardEvent } from 'react'
 import { Task } from "app/types";
 import { BiX, BiLoader } from 'react-icons/bi'
+import { useNotifications } from 'app/context/contexts';
 
 export default function UpdateTask({task, setTask, toggle, token}: {task: Task | undefined, setTask: Dispatch<SetStateAction<Task | undefined>>, toggle: ()=> void, token: string | null}) {
-  
-  const close = () => {
-    toggle()
-  }
+  const textAreaRef = useRef<HTMLTextAreaElement>(null)
+  const { createNotification } = useNotifications()
+
+  const notDate = task?.notificationAt && new Date(task.notificationAt)
+  const defaultNotAt = notDate && new Date(notDate.getTime() - notDate.getTimezoneOffset() * 60000).toISOString().slice(0,16)
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -32,36 +32,51 @@ export default function UpdateTask({task, setTask, toggle, token}: {task: Task |
         notificationAt
       })
     }).then(prom=> prom.json()).then(res=> {
-      if(res.length){
-        fetch(`/api/tasks/${task?.id}`, {
-          headers: {
-            'Authorization': `JWT ${token}`
-          }
-        }).then(prom=> prom.json()).then(rest=>{
-          setTask(rest)
-        }).catch(()=> console.error('Error in get task after update'))
+      if(res.title){
+        setTask(res)
+        createNotification({
+          type: 'success',
+          content: 'Updating task'
+        })
       }
-      close()
-    }).catch(()=> console.error('Error in update task'))
+      toggle()
+    }).catch(()=> {
+      console.error('Error in update task')
+      createNotification({
+        type: 'error',
+        content: 'Error updating task'
+      })
+    })
+  }
+
+  const hendleKeyUp = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    if(textAreaRef.current) {
+      const textAreaStyle = textAreaRef.current.style
+      textAreaStyle.height = `40px`
+      const scHeight = event.currentTarget.scrollHeight, newHeight = `${scHeight}px`
+      if(textAreaStyle.height != newHeight){
+        textAreaStyle.height = newHeight
+      }
+    }
   }
 
   return (
     <div className={styles.container}>
       <form onSubmit={handleSubmit} className={`${styles.form} form form-page`}>
-        <BiX onClick={close} className={styles.close} />
+        <BiX onClick={toggle} className='icon' />
 
-        <div className={styles.inputs}>
-          <div>
+        <div className='options'>
+          <div className='option'>
             <label className='label' htmlFor="tatitle" >Email</label>
             <input className='input' id='tatitle' type="text" defaultValue={`${task?.title}`} name='tatitle' required={true} minLength={3} maxLength={150} />
           </div>
-          <div>
+          <div className='option'>
             <label className='label' htmlFor="description" >Description</label>
-            <input className='input' id='description' type="text" defaultValue={`${task?.description}`} name='description' required={true} minLength={4} maxLength={30} />
+            <textarea ref={textAreaRef} onKeyUp={hendleKeyUp} className='textarea' id='description' defaultValue={`${task?.description}`} name='description' required={true} minLength={10} maxLength={600} />
           </div>
-          <div>
+          <div className='option'>
             <label className='label' htmlFor="notificationAt" >Notification at</label>
-            <input className='input' id='notificationAt' type="date" defaultValue={task?.notificationAt || undefined} name='notificationAt' />
+            <input className='input' id='notificationAt' type="datetime-local" defaultValue={defaultNotAt || undefined} name='notificationAt' />
           </div>
         </div>
 

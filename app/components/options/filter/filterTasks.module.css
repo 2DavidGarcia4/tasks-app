@@ -1,15 +1,16 @@
 .filter{
   width: 100%;
   bottom: -110%;
-  border: 1px #8f8f8f solid;
   z-index: 20;
   padding: 30px 20px;
   row-gap: 20px;
   display: flex;
   position: fixed;
+  box-shadow: 0 0 6px var(--Shadow-color);
   transition: bottom 0.5s;
   flex-direction: column;
   background-color: var(--Element-color);
+  transition: background-color 0.6s ease, bottom 0.6s ease, box-shadow 0.6s;
 }
 
 .show{
@@ -18,9 +19,16 @@
 
 .icon{
   top: 20px;
+  color: var(--Text-color);
   right: 20px;
   font-size: 25px;
   position: absolute;
+  transition: color 0.5s;
+}
+
+.title{
+  color: var(--Text-color);
+  transition: color 0.5s;
 }
 
 .options{
@@ -39,7 +47,8 @@
   height: 1px;
   bottom: -5px;
   position: absolute;
-  background-color: black;
+  transition: background-color 0.5s;
+  background-color: var(--Title-color);
 }
 
 .option:nth-child(3):after{
@@ -51,6 +60,42 @@
 }
 
 .selected p{
-  color: black;
+  color: var(--Text-color);
+  transition: color 0.5s;
   font-weight: bold;
+}
+
+
+@media (min-width: 600px){
+  .icon, .option{
+    cursor: pointer;
+  }
+
+  .icon:hover{
+    color: var(--Principal-color);
+  }
+
+  .filter{
+    top: 198px;
+    left: -110%;
+    width: 230px;
+    height: 250px;
+    transition: background-color 0.6s ease, left 0.7s ease, box-shadow 0.6s;
+  }
+
+  .filter::after{
+    top: 50%;
+    left: -10px;
+    pointer-events: none;
+    content: '';
+    transition: border 0.6s ease;
+    position: absolute;
+    border-right: 10px solid var(--Element-color);
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+  }
+
+  .show{
+    left: 70px;
+  }
 }

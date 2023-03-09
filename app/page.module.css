@@ -13,3 +13,9 @@
   border-radius: 6px;
   background-color: var(--Element-color);
 }
+
+@media (min-width: 600px){
+  .main{
+    padding-left: 70px;
+  }
+}

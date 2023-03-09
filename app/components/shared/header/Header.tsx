@@ -16,7 +16,6 @@ export default function Header(){
     })
   }
 
-
   return (
     <header ref={headerRef} className={styles.header}>
       <Link href={'/'} className={styles.title}>

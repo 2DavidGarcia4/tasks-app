@@ -42,15 +42,21 @@ export default function Options(){
     if(!isLoged) return router.push('/user/login/')
     if(typeof document != 'undefined'){
       const createTask = document.querySelector('.'+filterTasksStyles.filter)
-      createTask?.classList.add(filterTasksStyles.show)
+      createTask?.classList.toggle(filterTasksStyles.show)
     }
   }
 
   return (
     <div className={styles.options}>
-      <BiSearch onClick={openAndCloseSearch} className={styles.icon} />
-      <BiPlus onClick={showForm} className={styles.icon} />
-      <BiFilter onClick={showFilter} className={styles.icon} />
+      <div onClick={openAndCloseSearch} className={styles.option}>
+        <BiSearch className={styles.icon} />
+      </div>
+      <div onClick={showForm} className={styles.option}>
+        <BiPlus className={styles.icon} />
+      </div>
+      <div onClick={showFilter} className={styles.option}>
+        <BiFilter className={styles.icon} />
+      </div>
     </div>
   )
 }
