@@ -23,7 +23,6 @@ export default function Search(){
   }[]>([])
 
   useEffect(()=> {
-    console.log('use effect')
     let token: string | null = ''
     if(typeof localStorage != 'undefined') token = localStorage.getItem('token')
     fetch('/api/tasks', {

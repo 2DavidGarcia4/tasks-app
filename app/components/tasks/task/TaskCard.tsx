@@ -6,6 +6,7 @@ import { Task } from 'app/types'
 import { useRef, useState, ChangeEvent } from 'react'
 import { BiCheck, BiTime } from 'react-icons/bi'
 import Link from 'next/link'
+import { useNotifications } from 'app/context/contexts'
 
 let token: string | null = ''
 if(typeof localStorage != 'undefined') token = localStorage.getItem('token')
@@ -13,6 +14,7 @@ if(typeof localStorage != 'undefined') token = localStorage.getItem('token')
 export default function TaskCard({task}: {task: Task}){
   const taskRef = useRef<HTMLLIElement>(null)
   const [isCompleted, setIsCompleted] = useState(task.isCompleted)
+  const { createNotification } = useNotifications()
 
   const checking = ({target: {checked}}: ChangeEvent<HTMLInputElement>) => {
     fetch(`/api/tasks/${task.id}`, {
@@ -24,13 +26,31 @@ export default function TaskCard({task}: {task: Task}){
       body: JSON.stringify({
         isCompleted: checked
       })
+    }).then(()=> {
+      if(isCompleted){
+        createNotification({
+          type: 'warning',
+          content: 'Task marked as not finished'
+        })
+      }else{
+        createNotification({
+          type: 'success',
+          content: 'Task marked as finished'
+        })
+      }
+      setIsCompleted(!isCompleted)
     })
-    .catch(()=> console.error('Error in update task from task component.'))
+    .catch(()=> {
+      console.error('Error in update task from task component.')
+      createNotification({
+        type: 'error',
+        content: 'Error marking a task'
+      })
+    })
     
 
     task.isCompleted = checked
     taskRef.current?.classList.toggle(`${styles.completed}`)
-    setIsCompleted(!isCompleted)
   }
 
   return (

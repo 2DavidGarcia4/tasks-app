@@ -16,6 +16,8 @@ export default function UserOptions(){
   const { createNotification } = useNotifications()
 
   useEffect(()=> {
+    console.log('use effect')
+
     if(typeof localStorage != 'undefined') {
       const token = localStorage.getItem('token')
       let localDark = JSON.parse(localStorage.getItem('dark') || 'false')
