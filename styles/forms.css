@@ -21,6 +21,7 @@
 .options{
   display: flex;
   row-gap: 24px;
+  position: relative;
   flex-direction: column;
 }
 
@@ -92,6 +93,14 @@
   width: 0px;
 }
 
+.input-icon{
+  color: var(--Text-color);
+  right: 11px;
+  bottom: 11px;
+  position: absolute;
+  transition: color 0.5s;
+}
+
 .error{
   color: #F94A29;
   font-weight: 500;
@@ -142,6 +151,10 @@
   }
 
   ::-webkit-calendar-picker-indicator{
+    cursor: pointer;
+  }
+
+  .input-icon{
     cursor: pointer;
   }
 }
