@@ -48,7 +48,7 @@
   bottom: -5px;
   position: absolute;
   transition: background-color 0.5s;
-  background-color: var(--Title-color);
+  background-color: var(--Border-color);
 }
 
 .option:nth-child(3):after{
