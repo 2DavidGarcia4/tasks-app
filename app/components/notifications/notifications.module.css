@@ -127,7 +127,7 @@
 }
 
 .close{
-  color: var(--Title-color);
+  color: var(--Border-color);
   font-size: 24px;
   transition: color 0.5s;
 }
