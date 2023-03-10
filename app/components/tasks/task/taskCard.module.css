@@ -7,10 +7,10 @@
   transform: translateY(-100%);
   animation: move_task 0.5s ease forwards;
   min-height: 90px;
-  transition: background-color 0.4s ease, color 5s;
+  transition: background-color 0.4s ease, opacity 0.5s;
   border-radius: 5px;
   justify-content: space-between;
-  background-color: var(--Task-color);
+  background-color: var(--Principal-color);
 }
 
 @keyframes move_task {
@@ -20,7 +20,7 @@
 }
 
 .completed{
-  background-color: var(--Completed-color);
+  opacity: 60%;
 }
 
 .task div:nth-child(2){
@@ -44,7 +44,7 @@
 }
 
 .icon{
-  color: var(--Text-color);
+  color: var(--Title-color);
   font-size: 20px;
   transition: color 0.5s;
 }

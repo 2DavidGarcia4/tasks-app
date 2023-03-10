@@ -27,6 +27,7 @@ export default function TaskCard({task}: {task: Task}){
         isCompleted: checked
       })
     }).then(()=> {
+      console.log(isCompleted)
       if(isCompleted){
         createNotification({
           type: 'warning',

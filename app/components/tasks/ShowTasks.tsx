@@ -2,12 +2,14 @@
 
 import styles from './showTasks.module.css'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import TaskCard from "./task/TaskCard"
 import { Task } from 'app/types'
 import { useNotifications, useTasks } from 'app/context/contexts'
+import Loader from '../shared/loading/Loader'
 
 export default function ShowTasks(){
+  const [loading, setLoading] = useState(true)
   const { tasks, setTasks } = useTasks()
 
   useEffect(()=> {
@@ -20,18 +22,30 @@ export default function ShowTasks(){
           'Authorization': `JWT ${token}`
         }
       }).then(prom => prom.json()).then((res: Task[])=> {
-        setTasks(res.sort((a, b)=> new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()))
+        setLoading(false)
+        if(res.length){
+          setTasks(res.sort((a, b)=> new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()))
+        }
       })
-      .catch()
+      .catch(()=> {
+        console.error('Error no login')
+      })
     }
-  }, [setTasks])
+  }, [])
 
   return (
     <div className={styles.tasks}>
-      <h2 className={styles.title}>{tasks.length > 0 ? `Tasks: ${tasks.length}` : 'No tasks'}</h2>
-      <ul className={styles.list}>
-        {tasks.map(t=> <TaskCard key={t.id} task={t} />)}
-      </ul>
+      {
+        loading ? <Loader /> :
+        (
+          <>
+            <h2 className={styles.title}>{tasks.length > 0 ? `Tasks: ${tasks.length}` : 'No tasks'}</h2>
+            <ul className={styles.list}>
+              {tasks.map(t=> <TaskCard key={t.id} task={t} />)}
+            </ul>
+          </>
+        )
+      }
     </div>
   )
 }
