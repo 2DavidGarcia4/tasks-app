@@ -1,17 +1,28 @@
 'use client'
 
 import '../../../../styles/forms.css'
-import { FormEvent, useState } from 'react'
-import { BiLogIn, BiError } from 'react-icons/bi'
+
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { FormEvent, useState, useRef, useEffect } from 'react'
+import { BiLogIn, BiError, BiShow, BiHide } from 'react-icons/bi'
 import { useNotifications, useUser } from 'app/context/contexts'
+import { useLogin } from 'app/hooks/useLogin'
 
 export default function LoginForm(){
   const router = useRouter()
+  const [showPassword, setShowPassword] = useState(false)
+  const inputPasswordRef = useRef<HTMLInputElement>(null)
   const [correctCredentials, setCorrectCredentials] = useState(true)
   const { setUser } = useUser()
   const { createNotification } = useNotifications()
+  const isLoged = useLogin()
+
+  useEffect(()=> {
+    if(isLoged){
+      router.push('/')
+    }
+  }, [isLoged])
 
   const handleSubmint = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -56,6 +67,14 @@ export default function LoginForm(){
     })
   }
 
+  const togglePassword = () => {
+    if(inputPasswordRef.current?.type) {
+      if(showPassword) inputPasswordRef.current.type = 'password'
+      else inputPasswordRef.current.type = 'text'
+      setShowPassword(v=> !v)
+    } 
+  }
+
   return (
     <form onSubmit={handleSubmint} className='form form-page'>
       <h3 className='title' ><BiLogIn/> Log in</h3>
@@ -67,7 +86,8 @@ export default function LoginForm(){
         </div>
         <div className='option'>
           <label className='label' htmlFor="password" >Password</label>
-          <input className='input' id='password' type="password"  name='password' placeholder='Your password' required={true} minLength={4} maxLength={30} />
+          <input ref={inputPasswordRef} className='input' id='password' type="password"  name='password' placeholder='Your password' required={true} minLength={4} maxLength={30} />
+          {showPassword ? <BiShow onClick={togglePassword} className='input-icon' /> : <BiHide onClick={togglePassword} className='input-icon' />}
         </div>
       </div>
 
