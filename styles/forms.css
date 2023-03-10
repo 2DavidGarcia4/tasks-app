@@ -66,7 +66,7 @@
   height: 40px;
   resize: none;
   outline: none;
-  border: 1px solid var(--Title-color);
+  border: 1px solid var(--Border-color);
   padding: 10px;
   max-height: 200px;
   transition: color 0.5s, border 0.5s, box-shadow 0.5s;
