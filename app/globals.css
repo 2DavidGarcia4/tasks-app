@@ -9,14 +9,14 @@
   --Red-color: #ee2c2c;
   --Circle-theme: #F7C04A;
   --Text-color: #0e0e0e;
-  --Title-color: #74736a;
-  --Completed-color: #a0dd5a;
+  --Title-color: #364750;
+  --Border-color: #889445;
   --Tooltip: #fff;
   --Suggestion-bg: #cfcfcf;
 }
 
 body.dark{
-  --Principal-color: #2a91d6;
+  --Principal-color: #2483BF;
   --Secondary-color: #dfba27;
   --Background-color: #434242;
   --Element-color: #222222;
@@ -26,8 +26,8 @@ body.dark{
 
   --Circle-theme: #4e89ac;
   --Text-color: #d8d8d8;
-  --Title-color: #979797;
-  --Completed-color: #577c2b;
+  --Title-color: #233038;
+  --Border-color: #bfc762;
 
   --Tooltip: #0c0c0c;
   --Suggestion-bg: #525252;
