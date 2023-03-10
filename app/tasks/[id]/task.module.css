@@ -40,8 +40,9 @@
   width: 100%;
   opacity: 40%;
   position: absolute;
+  transition: background-color 0.5s ease;
   border-radius: 2px;
-  background-color: var(--Title-color);
+  background-color:  var(--Text-color);
 }
 
 .title{
