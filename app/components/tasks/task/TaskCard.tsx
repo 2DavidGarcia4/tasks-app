@@ -3,9 +3,9 @@
 import styles from './taskCard.module.css'
 
 import { Task } from 'app/types'
-import { useRef, useState, ChangeEvent } from 'react'
-import { BiCheck, BiTime } from 'react-icons/bi'
 import Link from 'next/link'
+import { useRef, useState, ChangeEvent, useEffect } from 'react'
+import { BiCheck, BiTime } from 'react-icons/bi'
 import { useNotifications } from 'app/context/contexts'
 
 let token: string | null = ''
@@ -15,6 +15,32 @@ export default function TaskCard({task}: {task: Task}){
   const taskRef = useRef<HTMLLIElement>(null)
   const [isCompleted, setIsCompleted] = useState(task.isCompleted)
   const { createNotification } = useNotifications()
+
+  useEffect(()=> {
+    if(task.notificationAt && !task.isCompleted){
+      const nowTime = Date.now()
+      const notificationTime = new Date(task.notificationAt).getTime()
+      
+      if(notificationTime > nowTime){
+        const timeDifference = Math.floor(notificationTime-nowTime)
+        if(timeDifference <= (8*60*60000)){
+          setTimeout(()=> {
+            if(typeof document != 'undefined'){
+              document.title = 'Reminder of your task'
+              setTimeout(()=> {
+                document.title = 'Tasks app'
+              }, 50000)
+            }
+            createNotification({
+              type: 'info',
+              content: `Reminder of your task (${task.title})`,
+              time: (2*60000)
+            })
+          }, timeDifference)
+        }
+      }
+    }
+  }, [])
 
   const checking = ({target: {checked}}: ChangeEvent<HTMLInputElement>) => {
     fetch(`/api/tasks/${task.id}`, {
