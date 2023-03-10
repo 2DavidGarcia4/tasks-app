@@ -22,7 +22,7 @@ export default function Card({noti}: {noti: Notification}){
         deleteNoti()
       }, noti.time)
     }
-  })
+  }, [])
 
   return (
     <li ref={notificationRef} className={`${styles.notification} ${styles[noti.type]}`}  >

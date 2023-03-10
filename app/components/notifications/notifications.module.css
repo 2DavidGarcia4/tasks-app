@@ -19,7 +19,6 @@
   margin-bottom: 10px;
   justify-content: space-between;
   background-color: var(--Element-color);
-  
 }
 
 .notification, .column{
@@ -66,7 +65,7 @@
     transform: translateX(-5%);
   }
   100%{
-    transform: translateX(calc(-100% - 10px));
+    transform: translateX(calc(-100% - 12px));
   }
 }
 
@@ -183,7 +182,7 @@
       transform: translateX(5%);
     }
     100%{
-      transform: translateX(calc(100% + 10px));
+      transform: translateX(calc(100% + 12px));
     }
   }
 }
