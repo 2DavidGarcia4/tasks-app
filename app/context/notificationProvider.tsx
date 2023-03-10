@@ -22,7 +22,7 @@ export default function NotificationsProvider({ children }: {children: React.Rea
   const deleteNotification = (noti: Notification) => {
     setTimeout(()=> {
       dispatch({type: 'DELETE', payload: noti})
-    }, noti.time || 1000)
+    }, noti.time || 500)
   }
 
   return (
