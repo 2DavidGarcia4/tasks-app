@@ -4,8 +4,8 @@
   padding: 10px;
   display: flex;
   position: relative;
-  transform: translateY(-100%);
-  animation: move_task 0.5s ease forwards;
+  /* transform: translateY(-100%); */
+  /* animation: move_task 0.5s ease forwards; */
   min-height: 90px;
   transition: background-color 0.4s ease, opacity 0.5s;
   border-radius: 5px;

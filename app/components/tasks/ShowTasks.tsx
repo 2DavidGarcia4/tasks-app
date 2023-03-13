@@ -5,7 +5,7 @@ import styles from './showTasks.module.css'
 import { useEffect, useState } from 'react'
 import TaskCard from "./task/TaskCard"
 import { Task } from 'app/types'
-import { useNotifications, useTasks } from 'app/context/contexts'
+import { useTasks } from 'app/context/contexts'
 import Loader from '../shared/loading/Loader'
 
 export default function ShowTasks(){
@@ -29,19 +29,24 @@ export default function ShowTasks(){
       })
       .catch(()=> {
         console.error('Error no login')
+        setTimeout(()=> setLoading(false), 3000)
       })
-    }
+    }else setTimeout(()=> setLoading(false), 3000)
   }, [])
 
   return (
     <div className={styles.tasks}>
       {
-        loading ? <Loader /> :
+        loading ? (
+          <div className={styles['loader-container']}>
+            <Loader />
+          </div>
+        ) :
         (
           <>
             <h2 className={styles.title}>{tasks.length > 0 ? `Tasks: ${tasks.length}` : 'No tasks'}</h2>
-            <ul className={styles.list}>
-              {tasks.map(t=> <TaskCard key={t.id} task={t} />)}
+            <ul className={styles.list} >
+              {tasks.map((t, i)=> <TaskCard key={t.id} task={t} />)}
             </ul>
           </>
         )

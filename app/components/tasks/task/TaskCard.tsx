@@ -4,7 +4,7 @@ import styles from './taskCard.module.css'
 
 import { Task } from 'app/types'
 import Link from 'next/link'
-import { useRef, useState, ChangeEvent, useEffect } from 'react'
+import { useRef, useState, ChangeEvent, useEffect, DragEvent, TouchEvent } from 'react'
 import { BiCheck, BiTime } from 'react-icons/bi'
 import { useNotifications } from 'app/context/contexts'
 
@@ -81,7 +81,7 @@ export default function TaskCard({task}: {task: Task}){
   }
 
   return (
-    <li ref={taskRef} className={`${styles.task} ${task.isCompleted && styles.completed}`} draggable={true} >
+    <li ref={taskRef} className={`${styles.task} ${task.isCompleted && styles.completed}`} >
       <div>
         <Link href={`/tasks/${task.id}`}>
           <h3 className={styles.title}>{isCompleted ? <BiCheck className={`${styles.icon} ${styles.check}`} /> : <BiTime className={styles.icon} />} {task.title}</h3>
