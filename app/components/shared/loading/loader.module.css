@@ -8,8 +8,8 @@
 }
 
 .loader{
-  width: 100px;
-  height: 100px;
+  width: 130px;
+  height: 130px;
   position: relative;
   animation: spin 1.2s linear infinite;
   border-radius: 50%;
