@@ -4,6 +4,7 @@ import Header from './components/shared/header/Header'
 import UserProvider from './context/userProvider'
 import Notifications from './components/notifications/Notifications'
 import NotificationsProvider from './context/notificationProvider'
+import TasksProvider from './context/tasksProvider'
 
 export default function RootLayout({children,}: {children: React.ReactNode}) {
   return (
@@ -16,9 +17,11 @@ export default function RootLayout({children,}: {children: React.ReactNode}) {
       <body>
         <NotificationsProvider>
           <UserProvider>
-            <Header />
-            <Notifications />
-            {children}
+            <TasksProvider>
+              <Header />
+              <Notifications />
+              {children}
+            </TasksProvider>
           </UserProvider>
         </NotificationsProvider>
       </body>
