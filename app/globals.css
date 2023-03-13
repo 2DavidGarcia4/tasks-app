@@ -13,6 +13,7 @@
   --Border-color: #889445;
   --Tooltip: #fff;
   --Suggestion-bg: #cfcfcf;
+  --Text-selected: #c0aa51;
 }
 
 body.dark{
@@ -31,6 +32,7 @@ body.dark{
 
   --Tooltip: #0c0c0c;
   --Suggestion-bg: #525252;
+  --Text-selected: #997b01;
 }
 
 
@@ -43,11 +45,16 @@ body.dark{
   margin: 0;
 }
 
+*::selection{
+  background-color: var(--Text-selected);
+}
+
 html{
   scroll-behavior: smooth;
 }
 
 body {
+  height: 100vh;
   background-color: var(--Background-color);
   transition: background-color 0.5s;
 }
