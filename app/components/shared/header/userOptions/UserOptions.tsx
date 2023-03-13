@@ -6,14 +6,17 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { BiX, BiMoon, BiSun } from 'react-icons/bi'
 import { useRef, useEffect, useState } from 'react'
-import { useNotifications, useUser } from 'app/context/contexts'
+import { useNotifications, useTasks, useUser } from 'app/context/contexts'
+import { useRouter } from 'next/navigation'
 
 export default function UserOptions(){
   const userOptions = useRef<HTMLDivElement>(null)
   const circleThemeRef = useRef<HTMLDivElement>(null)
+  const router = useRouter()
   const [isDark, setIsDark] = useState(false)
   const { user, setUser } = useUser()
   const { createNotification } = useNotifications()
+  const { setTasks } = useTasks()
 
   useEffect(()=> {
     if(typeof localStorage != 'undefined') {
@@ -64,6 +67,17 @@ export default function UserOptions(){
 
     setIsDark(!isDark)
   }
+
+  const logOut = () => {
+    if(typeof localStorage != 'undefined'){
+      localStorage.removeItem('token')
+    }
+
+    openAndCloseUserOptions()
+    setUser(undefined)
+    setTasks([])
+    router.push('/')
+  }
   
   return (
     <div className={styles.container}>
@@ -91,16 +105,22 @@ export default function UserOptions(){
           <p className={styles['user-name']}>{user?.name || 'User'}</p>
         </div>
 
-        {user ? <Link onClick={openAndCloseUserOptions} className={styles['link-profile']} href={'/user/profile'}>Profile</Link> : (
-          <div className={styles['user-other-links']}>
-            <Link onClick={openAndCloseUserOptions} className={styles['user-link']} href={'/user/login'} >
-              Log in
-            </Link>
-            <Link onClick={openAndCloseUserOptions} className={styles['user-link']} href={'/user/register'} >
-              Sign up
-            </Link>
-          </div>
-        )}
+        <div className={styles['user-links']}>
+          {user ? 
+            (
+              <>
+                <Link onClick={openAndCloseUserOptions} className={styles['user-link']} href={'/user/profile'}>Profile</Link>
+                <button onClick={logOut} className={styles['user-link']}>Log out</button>
+              </>
+            ) :
+            (
+              <>
+                <Link onClick={openAndCloseUserOptions} className={styles['user-link']} href={'/user/login'} >Log in</Link>
+                <Link onClick={openAndCloseUserOptions} className={styles['user-link']} href={'/user/register'} >Sign up</Link>
+              </>
+            )
+          }
+        </div>
       </div>
     </div>
   )
