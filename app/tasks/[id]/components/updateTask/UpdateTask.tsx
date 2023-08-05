@@ -67,7 +67,7 @@ export default function UpdateTask({task, setTask, toggle, token}: {task: Task |
 
         <div className='options'>
           <div className='option'>
-            <label className='label' htmlFor="tatitle" >Email</label>
+            <label className='label' htmlFor="tatitle" >Title</label>
             <input className='input' id='tatitle' type="text" defaultValue={`${task?.title}`} name='tatitle' required={true} minLength={3} maxLength={150} />
           </div>
           <div className='option'>
