@@ -35,7 +35,6 @@
 }
 
 .title{
-  color: var(--Title-color);
   display: flex;
   column-gap: 4px;
   transition: color 0.5s;
@@ -44,7 +43,6 @@
 }
 
 .icon{
-  color: var(--Title-color);
   font-size: 20px;
   transition: color 0.5s;
 }

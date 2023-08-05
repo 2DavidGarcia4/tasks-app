@@ -67,6 +67,10 @@
 
 
 @media (min-width: 600px){
+  .filter{
+    border-radius: 6px;
+  }
+
   .icon, .option{
     cursor: pointer;
   }

@@ -54,6 +54,7 @@ html{
 }
 
 body {
+  color: var(--Text-color);
   height: 100vh;
   background-color: var(--Background-color);
   transition: background-color 0.5s;
